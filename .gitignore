@@ -41,3 +41,8 @@ project.xcworkspace
 .DS_Store
 /polymer/eduke32/*.cache
 /polymer/eduke32/*.cfg
+
+polymer/eduke32/DUKE.RTS
+polymer/eduke32/DUKE3D.GRP
+polymer/eduke32/eduke32.VC.opendb
+polymer/eduke32/textures
