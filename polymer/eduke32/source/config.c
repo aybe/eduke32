@@ -232,7 +232,7 @@ void CONFIG_SetDefaults(void)
 #ifdef GEKKO
     ud.config.UseJoystick = 1;
 #else
-    ud.config.UseJoystick = 0;
+    ud.config.UseJoystick = 1;
 #endif
     ud.config.UseMouse = 1;
     ud.config.VoiceToggle = 5; // bitfield, 1 = local, 2 = dummy, 4 = other players in DM
