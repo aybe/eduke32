@@ -22,6 +22,12 @@
 #include "android.h"
 #endif
 
+#ifdef XINPUT
+#include "../duke3d.h"
+#include "XInput.h"
+#pragma comment(lib, "XInput9_1_0.lib")
+#endif
+
 int32_t CONTROL_JoyPresent = FALSE;
 int32_t CONTROL_JoystickEnabled = FALSE;
 int32_t CONTROL_MousePresent = FALSE;
@@ -640,6 +646,29 @@ static void CONTROL_PollDevices(ControlInfo *info)
 
     if (CONTROL_JoystickEnabled)
     {
+
+#ifdef XINPUT
+		XINPUT_STATE state;
+		ZeroMemory(&state, sizeof(XINPUT_STATE));
+		DWORD dwResult = XInputGetState(0, &state);
+		int32_t axes[6] = {};
+		if (dwResult == ERROR_SUCCESS)
+		{
+			int lx = state.Gamepad.sThumbLX;
+			int ly = -state.Gamepad.sThumbLY;
+			int rx = state.Gamepad.sThumbRX;
+			int ry = state.Gamepad.sThumbRY;
+			int lt = state.Gamepad.bLeftTrigger;
+			int rt = state.Gamepad.bRightTrigger;
+			int running = BUTTON(gamefunc_Run) || ud.auto_run ? 2 : 1;
+			axes[0] = pow(lx / 32768.0, 3) * 10000 / 256 * running;
+			axes[1] = pow(ly / 32768.0, 3) * 10000 / 4 * running;
+			axes[2] = pow(rx / 32768.0, 3) * 10000 / 8;
+			axes[3] = pow(ry / 32768.0, 3) * 10000 / 8;
+			axes[4] = lt / 128.0 * 10000;
+			axes[5] = rt / 128.0 * 10000;
+		}
+#endif
         int32_t i = joynumaxes-1;
 
         Bmemcpy(CONTROL_LastJoyAxes,   CONTROL_JoyAxes,   sizeof(CONTROL_JoyAxes));
@@ -647,9 +676,12 @@ static void CONTROL_PollDevices(ControlInfo *info)
 
         for (; i>=0; i--)
         {
-            CONTROL_JoyAxes[i].analog = joyaxis[i];
-
-            CONTROL_DigitizeAxis(i, controldevice_joystick);
+#ifdef XINPUT
+			CONTROL_JoyAxes[i].analog = axes[i];
+#else
+			CONTROL_JoyAxes[i].analog = joyaxis[i];
+#endif
+			CONTROL_DigitizeAxis(i, controldevice_joystick);
             CONTROL_ScaleAxis(i, controldevice_joystick);
             LIMITCONTROL(&CONTROL_JoyAxes[i].analog);
             CONTROL_ApplyAxis(i, info, controldevice_joystick);
