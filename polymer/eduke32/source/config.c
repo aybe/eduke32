@@ -292,27 +292,34 @@ void CONFIG_SetDefaults(void)
     memset(ud.config.JoystickFunctions, -1, sizeof(ud.config.JoystickFunctions));
     for (i=0; i<MAXJOYBUTTONSANDHATS; i++)
     {
-        ud.config.JoystickFunctions[i][0] = CONFIG_FunctionNameToNum(joystickdefaults[i]);
-        ud.config.JoystickFunctions[i][1] = CONFIG_FunctionNameToNum(joystickclickeddefaults[i]);
+#ifndef NO_DEFAULT_BINDINGS
+		ud.config.JoystickFunctions[i][0] = CONFIG_FunctionNameToNum(joystickdefaults[i]);
+		ud.config.JoystickFunctions[i][1] = CONFIG_FunctionNameToNum(joystickclickeddefaults[i]);
         CONTROL_MapButton(ud.config.JoystickFunctions[i][0], i, 0, controldevice_joystick);
         CONTROL_MapButton(ud.config.JoystickFunctions[i][1], i, 1, controldevice_joystick);
+#endif
     }
 
-    memset(ud.config.JoystickDigitalFunctions, -1, sizeof(ud.config.JoystickDigitalFunctions));
-    for (i=0; i<MAXJOYAXES; i++)
+	memset(ud.config.JoystickDigitalFunctions, -1, sizeof(ud.config.JoystickDigitalFunctions));
+	memset(ud.config.JoystickAnalogueAxes, -1, sizeof(ud.config.JoystickAnalogueAxes));
+	for (i=0; i<MAXJOYAXES; i++)
     {
         ud.config.JoystickAnalogueScale[i] = DEFAULTJOYSTICKANALOGUESCALE;
         ud.config.JoystickAnalogueDead[i] = DEFAULTJOYSTICKANALOGUEDEAD;
         ud.config.JoystickAnalogueSaturate[i] = DEFAULTJOYSTICKANALOGUESATURATE;
         CONTROL_SetAnalogAxisScale(i, ud.config.JoystickAnalogueScale[i], controldevice_joystick);
 
-        ud.config.JoystickDigitalFunctions[i][0] = CONFIG_FunctionNameToNum(joystickdigitaldefaults[i*2]);
-        ud.config.JoystickDigitalFunctions[i][1] = CONFIG_FunctionNameToNum(joystickdigitaldefaults[i*2+1]);
+#ifndef NO_DEFAULT_BINDINGS
+		ud.config.JoystickDigitalFunctions[i][0] = CONFIG_FunctionNameToNum(joystickdigitaldefaults[i * 2]);
+		ud.config.JoystickDigitalFunctions[i][1] = CONFIG_FunctionNameToNum(joystickdigitaldefaults[i * 2 + 1]);
         CONTROL_MapDigitalAxis(i, ud.config.JoystickDigitalFunctions[i][0], 0, controldevice_joystick);
         CONTROL_MapDigitalAxis(i, ud.config.JoystickDigitalFunctions[i][1], 1, controldevice_joystick);
+#endif
 
-        ud.config.JoystickAnalogueAxes[i] = CONFIG_AnalogNameToNum(joystickanalogdefaults[i]);
+#ifndef NO_DEFAULT_BINDINGS
+		ud.config.JoystickAnalogueAxes[i] = CONFIG_AnalogNameToNum(joystickanalogdefaults[i]);
         CONTROL_MapAnalogAxis(i, ud.config.JoystickAnalogueAxes[i], controldevice_joystick);
+#endif
     }
 }
 
