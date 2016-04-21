@@ -29,5 +29,12 @@ SVN 'bits' have been pushed to the repository, it should be relatively easy to k
 - pick your flavor : 32-bit or 64-bit
 - *Visual C++ Redistributable for Visual Studio 2015* is included, install it if you don't have it
 - a default `eduke32.cfg` with a *FPS-like* layout is included
+ 
+## Usage notes
+
+- initially *AutoRun* is enabled by the game, make sure you disable it to be able to walk and run using analog axes
+- you can navigate in the menus with the *D-Pad* but due to my configuration layout, button *X* is *Accept* and *Right shoulder* is *Cancel*, i.e. game is hard-coded to *open/crouch* actions for menu navigation
+- if you ever change *digital button* for a trigger it seems that one has to restart the game for it to be effective
+- patch has been succesfully tested with BloodCM, consequently it should work with any game based on eduke32 :D
 
 
