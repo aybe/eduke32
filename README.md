@@ -23,6 +23,4 @@ revision R5700 that includes bug-fixes for joystick-related annoyances, especial
 
 If you didn't use the shipped `eduke32.cfg`, you will have to define joystick bindings as well as disabling *AutoRun* on first start. This is a little trade-off compared to the behavior of vanilla build, where invariably they were default-assigned each time the game was started.
 
-You can navigate in the menus with the D-Pad, beware though, *accept* and *cancel* actions are hard-coded in the engine; their respective button on your game pad will depend of the layout you have decided of.
-
-If you define *digital button* for a trigger, you will have to restart the game for the change to be effective.
+You can navigate in the menus with the D-Pad, beware though, *accept* and *cancel* actions are hard-coded in the engine; their respective button on your game pad will depend of the layout you have decided of. Also, if you define *digital button* for a trigger, you will have to restart the game for the change to be effective.
